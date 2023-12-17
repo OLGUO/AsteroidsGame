@@ -1,6 +1,7 @@
 Spaceship bob = new Spaceship();
 Star[] nightSky = new Star[200];
 ArrayList <Asteroid> list = new ArrayList <Asteroid>();
+ArrayList <Bullet> bullets = new ArrayList <Bullet>();
 
 public void setup()
 {
@@ -13,6 +14,12 @@ nightSky[i] = new Star();
  list.add(new Asteroid());
  list.add(new Asteroid());
  list.add(new Asteroid());
+ list.add(new Asteroid());
+ list.add(new Asteroid());
+ list.add(new Asteroid());
+ list.add(new Asteroid());
+ list.add(new Asteroid());
+ 
 }
 public void draw()
 {
@@ -29,6 +36,25 @@ nightSky[i].show();
  list.remove(i);
  list.add(new Asteroid());
  }
+ }
+ 
+ for(int j = 0; j < bullets.size(); j++){ 
+ float d = 0; 
+ for(int i = 0; i < list.size(); i++){ 
+ d = dist((float)bullets.get(j).getMyCenterX(), (float)bullets.get(j).getMyCenterY(), (float)list.get(i).getX(), (float)list.get(i).getY()); 
+ if(d < 30){ 
+ bullets.remove(j); 
+ list.remove(i); 
+ break; 
+ } 
+ } 
+ if(d < 30) break; 
+ }
+ 
+ for(int i = 0; i < bullets.size(); i++){
+ bullets.get(i).move();
+ bullets.get(i).show();
+
  }
 }
 
@@ -54,7 +80,11 @@ public void keyPressed()
      bob.setYspeed(0);
      bob.turn((int)(Math.random()*300+100));
      bob.setXCenter((int)(Math.random()*300+100));
-      bob.setYCenter((int)(Math.random()*300+100));
+     bob.setYCenter((int)(Math.random()*300+100));
      
  }
+ if(key == 'r'){
+ bullets.add(new Bullet(bob));
+ }
+
 }
